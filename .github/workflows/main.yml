@@ -49,3 +49,13 @@ jobs:
         run: |
           docker build -t $PRODUCT_IMAGE:latest ./product-service
           docker push $PRODUCT_IMAGE:latest
+          
+      - name: Set up kubectl
+        run: |
+          kubectl version --client
+          kubectl config current-context
+
+      - name: Apply Kubernetes manifests
+        run: |
+          kubectl apply -f k8s/
+          kubectl get all    
