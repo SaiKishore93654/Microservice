@@ -7,17 +7,11 @@ on:
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  IMAGE_REPO: saikishore1234/microservice  
+  IMAGE_REPO: saikishore1234/microservice  # ✅ base variable only
 
 jobs:
   build_and_push:
     runs-on: ubuntu-latest
-
-    env:
-      FRONTEND_IMAGE: ${{ env.IMAGE_REPO }}-frontend
-      CART_IMAGE: ${{ env.IMAGE_REPO }}-cart
-      ORDER_IMAGE: ${{ env.IMAGE_REPO }}-order
-      PRODUCT_IMAGE: ${{ env.IMAGE_REPO }}-product
 
     steps:
       - name: Checkout repo
@@ -28,6 +22,13 @@ jobs:
         with:
           username: ${{ env.DOCKER_USERNAME }}
           password: ${{ env.DOCKER_PASSWORD }}
+
+      - name: Set image names
+        run: |
+          echo "FRONTEND_IMAGE=${IMAGE_REPO}-frontend" >> $GITHUB_ENV
+          echo "CART_IMAGE=${IMAGE_REPO}-cart" >> $GITHUB_ENV
+          echo "ORDER_IMAGE=${IMAGE_REPO}-order" >> $GITHUB_ENV
+          echo "PRODUCT_IMAGE=${IMAGE_REPO}-product" >> $GITHUB_ENV
 
       - name: Build and push frontend image
         run: |
