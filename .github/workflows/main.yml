@@ -7,7 +7,7 @@ on:
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  IMAGE_REPO: saikishore1234/microservice  # ✅ base variable only
+  IMAGE_REPO: saikishore1234/microservice  
 
 jobs:
   build_and_push:
@@ -50,10 +50,14 @@ jobs:
           docker build -t $PRODUCT_IMAGE:latest ./product-service
           docker push $PRODUCT_IMAGE:latest
           
-      - name: Set up kubectl
+      - name: Start Minikube
+        run: |
+          minikube start --driver=docker
+          kubectl config use-context minikube
+      - name: Check kubectl client version and current context
         run: |
           kubectl version --client
-          kubectl config current-context
+          kubectl config current-context    
 
       - name: Apply Kubernetes manifests
         run: |
