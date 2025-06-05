@@ -7,7 +7,7 @@ on:
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  IMAGE_REPO: yourdockerhubusername/microservice
+  IMAGE_REPO: saikishore1234/microservice
   FRONTEND_IMAGE: ${{ env.IMAGE_REPO }}-frontend
   CART_IMAGE: ${{ env.IMAGE_REPO }}-cart
   ORDER_IMAGE: ${{ env.IMAGE_REPO }}-order
