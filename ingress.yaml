@@ -1,0 +1,42 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ecommerce-ingress
+  namespace: ecommerce
+  annotations:
+    # You can keep or remove this; it's optional if ingressClassName is set
+    kubernetes.io/ingress.class: nginx
+spec:
+  ingressClassName: nginx    # <-- add this line
+  rules:
+    - host: ecommerce.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80
+          - path: /cart
+            pathType: Prefix
+            backend:
+              service:
+                name: cart-service
+                port:
+                  number: 5002
+          - path: /product
+            pathType: Prefix
+            backend:
+              service:
+                name: product-service
+                port:
+                  number: 5001
+          - path: /order
+            pathType: Prefix
+            backend:
+              service:
+                name: order-service
+                port:
+                  number: 5003
