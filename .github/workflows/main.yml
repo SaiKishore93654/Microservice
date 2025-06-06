@@ -61,4 +61,4 @@ jobs:
 
       - name: Apply Kubernetes manifests
         run: |
-          kubectl apply -f k8s/ --recursive 
+          kubectl apply -f k8s/namespace.yaml
