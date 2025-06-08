@@ -1,42 +1,98 @@
-# Kubernetes Microservices Deployment with Observability
+# Microservices DevOps Application
 
-## Project Overview
-
-This project demonstrates deploying containerized microservices on a Kubernetes cluster with complete observability using Prometheus and Grafana. It includes scalable Kubernetes manifests, service definitions, and monitoring setup.
+This project is a simple microservices-based e-commerce application built with modern DevOps practices.
 
 ---
 
-## Tech Stack
+## Technologies Used
 
-- **Containerization:** Docker  
-- **Orchestration:** Kubernetes (Deployments, Services, Helm)  
-- **Monitoring & Observability:** Prometheus, Grafana, Alertmanager  
-- **CI/CD:**  GitHub Actions   
-
+- **Languages:** Python, Node.js  
+- **Containerization:** Docker, Docker Compose  
+- **Orchestration:** Kubernetes, Helm  
+- **Monitoring:** Prometheus, Grafana  
+- **CI/CD:** GitHub Actions  
+- **Version Control:** Git, GitHub  
+- **Platform Support:** Windows, Linux, macOS  
 
 ---
 
-## Features
+## Architecture Overview
 
-- **Kubernetes Deployment:**  
-  Deploy microservices with replicas, environment variables, and resource limits.
+The application consists of three microservices:
 
-- **Kubernetes Services:**  
-  Expose microservices internally or externally using ClusterIP, NodePort, or LoadBalancer.
+- **product-service:** Manages product data  
+- **cart-service:** Handles shopping cart operations  
+- **order-service:** Processes orders  
+
+These services communicate with each other to complete typical e-commerce workflows.
+
+---
+
+## How to Run Locally
+
+### Prerequisites
+
+- Install Docker and Docker Compose
+
+### Steps
+
+1. Clone the repository:
+
+  
+git clone https://github.com/yourusername/microservices-devops.git
+   
+Start the application:
+
+Open powershell
+
+docker-compose up --build -d
+Access services:
+
+Product Service: http://localhost:5002
+
+Cart Service: http://localhost:5003
+
+Order Service: http://localhost:5004
+
+Access monitoring dashboards:
+
+Prometheus: http://localhost:9090
+
+Grafana: http://localhost:3000 
+
+Monitoring
+Prometheus collects metrics from all services, while Grafana provides dashboards to visualize service health and performance.
+
+CI/CD Pipeline
+GitHub Actions automates the build, test, and deployment process by:
+
+Building Docker images on code changes
+
+Pushing images to Docker Hub
+
+Deploying services to Kubernetes using Github actions
+
+Steps to Install
+Add the Helm repository and update:
+
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+Install Prometheus:
 
 
-- **Helm Charts:**  
-  Package Kubernetes manifests for easy nginx ,prometheus,grafana
-
-- **Prometheus Monitoring:**  
-  Scrape metrics from applications and Kubernetes components.
-
-- **Grafana Visualization:**  
-  Real-time dashboards for system health and application performance.
-
-- **Alerting:**  
-  Configure alerts with Alertmanager (optional).
+helm install prometheus prometheus-community/prometheus
+Install Grafana:
 
 
+helm install grafana prometheus-community/grafana
+Get the Grafana admin password:
 
 
+kubectl get secret grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+Forward Grafana port to localhost:
+
+
+kubectl port-forward svc/grafana 3000:80
+Open your browser and go to:
+
+http://localhost:3000
